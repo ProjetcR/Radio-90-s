@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Radio des années 90</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="https://www.dropbox.com/scl/fi/0at32sz6n5kk82m3474pe/360_F_601006988_DkOMYTEz1IGFtDqE4Y4yVW9bAzZqeFKd.jpg?rlkey=wgpparw8gq27s1kpj9evrytjs&st=0zeyv3a4&dl=1" type="image/x-icon">
+</head>
+<body>
+
+    <!-- Écran de chargement -->
+    <div id="loading-screen">
+        <video id="loading-video" autoplay muted>
+            <source src="https://www.dropbox.com/scl/fi/celcapprromytoqpmeqd4/charement.mp4?rlkey=96ms9wd4cr6aco1q75zd1wssu&st=2fpyp9kw&dl=1" type="video/mp4">
+            Votre navigateur ne supporte pas la vidéo.
+        </video>
+    </div>
+
+    <!-- Contenu principal caché au début -->
+    <div id="main-content" class="hidden">
+        <h1 id="site-title">Radio des années 90</h1>
+        <p id="site-description">Replongez dans l'univers de la musique des années 90 !</p>
+
+        <!-- Boutons de contrôle radio -->
+        <div class="radio-input">
+            <label class="label">
+                <input value="value-1" name="value-radio" id="play-radio" type="radio" />
+                <span class="text">Play</span>
+            </label>
+            <label class="label">
+                <input value="value-1" name="value-radio" id="stop-radio" type="radio" />
+                <span class="text">Stop</span>
+            </label>
+            <label class="label">
+                <input value="value-1" name="value-radio" id="next-radio" type="radio" />
+                <span class="text">Next FM</span>
+            </label>
+        </div>
+
+        <div id="sound-bar" style="display:none;">
+            <p>En écoute...</p>
+           <style> div {
+                margin-bottom: 20px; /* Ajoute un espace sous chaque élément */
+           }</style>
+            <div id="song-title"></div>
+            <div class="loading">
+                <div class="obj"></div>
+                <div class="obj"></div>
+                <div class="obj"></div>
+                <div class="obj"></div>
+                <div class="obj"></div>
+                <div class="obj"></div>
+                <div class="obj"></div>
+                <div class="obj"></div>
+              </div>
+        </div>
+    </div>
+    <a class="playstore-button" href="https://play.google.com/store/games?gl=FR" target="_blank">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="icon" viewBox="0 0 512 512">
+          <path d="M99.617 8.057a50.191 50.191 0 00-38.815-6.713l230.932 230.933 74.846-74.846L99.617 8.057zM32.139 20.116c-6.441 8.563-10.148 19.077-10.148 30.199v411.358c0 11.123 3.708 21.636 10.148 30.199l235.877-235.877L32.139 20.116zM464.261 212.087l-67.266-37.637-81.544 81.544 81.548 81.548 67.273-37.64c16.117-9.03 25.738-25.442 25.738-43.908s-9.621-34.877-25.749-43.907zM291.733 279.711L60.815 510.629c3.786.891 7.639 1.371 11.492 1.371a50.275 50.275 0 0027.31-8.07l266.965-149.372-74.849-74.847z"></path>
+        </svg>
+        <span class="texts">
+          <span class="text-1">GET IT ON</span>
+          <span class="text-2">Google Play</span>
+        </span>
+      </a>
+    <script src="index.js"></script>
+</body>
+</html>

@@ -1,0 +1,337 @@
+/* Écran de chargement */
+#loading-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(255, 255, 255, 0.8); /* Légère opacité de fond */
+    z-index: 9999;
+}
+
+#loading-video {
+    width: 100%;
+    max-width: 100%;
+    transition: opacity 2s ease-out; /* Transition de fondu */
+}
+
+/* Cache le contenu principal jusqu'à la fin de la vidéo */
+#main-content.hidden {
+    display: none;
+}
+
+/* Styles du fond principal (beige-crème rétro) */
+body {
+    font-family: 'Courier New', Courier, monospace; /* Police rétro */
+    background-color: #f8f4e3; /* Fond beige/crème pour un look rétro */
+    margin: 0;
+    padding: 0;
+    color: #4a4a4a; /* Couleur de texte plus douce */
+}
+
+/* Container pour centrer les éléments */
+#main-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Prend toute la hauteur de la fenêtre */
+    opacity: 0;
+    transform: translateY(50px); /* Commence un peu plus bas pour l'effet de montée */
+    animation: fadeInUp 1s ease-out forwards; /* Animation d'apparition */
+    animation-delay: 1s; /* Retarder l'apparition pour que la vidéo de chargement finisse */
+}
+
+/* Animation de l'apparition du contenu principal (effet de montée et fondu) */
+@keyframes fadeInUp {
+    0% {
+        opacity: 0;
+        transform: translateY(50px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Titre du site */
+#site-title {
+    font-size: 48px;
+    color: #ffcc00;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.4);
+    font-family: 'Impact', sans-serif;
+}
+
+/* Description du site */
+#site-description {
+    font-size: 20px;
+    color: #333;
+    margin-top: 10px;
+    text-align: center;
+}
+
+/* Les boutons radio pour Play, Stop, Next */
+.radio-input {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    background-color: black;
+    padding: 4px;
+    border-radius: 10px;
+    z-index: -1;
+}
+
+.radio-input input {
+    display: none;
+}
+
+.radio-input .label {
+    width: 90px;
+    height: 60px;
+    background: linear-gradient(to bottom, #333333, rgb(36, 35, 35));
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 8px;
+    transition: all 0.1s linear;
+    border-top: 1px solid #4e4d4d;
+    background-color: #333333;
+    position: relative;
+    cursor: pointer;
+    box-shadow: 0px 17px 5px 1px rgba(0, 0, 0, 0.2);
+}
+
+.label:has(input[type="radio"]:checked) {
+    box-shadow: 0px 17px 5px 1px rgba(0, 0, 0, 0);
+    background: linear-gradient(to bottom, #1d1d1d, #1d1d1d);
+    border-top: none;
+}
+
+.label:first-child {
+    border-top-left-radius: 6px;
+    border-bottom-left-radius: 6px;
+}
+
+.label:last-child {
+    border-top-right-radius: 6px;
+    border-bottom-right-radius: 6px;
+}
+
+.label::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 103%;
+    height: 100%;
+    border-radius: 10px;
+    background: linear-gradient(
+        to bottom,
+        transparent 10%,
+        transparent,
+        transparent 90%
+    );
+    transition: all 0.1s linear;
+    z-index: -1;
+}
+
+.label:has(input[type="radio"]:checked)::before {
+    background: linear-gradient(
+        to bottom,
+        transparent 10%,
+        #cae2fd63,
+        transparent 90%
+    );
+}
+
+.label .text {
+    color: black;
+    font-size: 15px;
+    line-height: 12px;
+    padding: 0px;
+    font-weight: 800;
+    text-transform: uppercase;
+    transition: all 0.1s linear;
+    text-shadow:
+        -1px -1px 1px rgb(224, 224, 224, 0.1),
+        0px 2px 3px rgb(0, 0, 0, 0.3);
+}
+
+.label input[type="radio"]:checked + .text {
+    color: rgb(202, 226, 253);
+    text-shadow: 0px 0px 12px #cae2fd;
+}
+
+/* La barre de son (qui sera cachée au début) */
+#sound-bar {
+    margin-top: 20px;
+    background-color: #fff3e6;
+    padding: 10px;
+    border-radius: 10px;
+    border: 2px solid #e0a0a0;
+    display: none;
+    width: 60%;
+    text-align: center;
+    opacity: 0;
+    transform: translateY(50px); /* Commence en bas */
+    animation: appear 1s ease-out forwards;
+}
+
+/* Animation d'apparition de la boîte */
+@keyframes appear {
+    0% {
+        opacity: 0;
+        transform: translateY(50px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Le titre de la chanson défilant sous la barre de son */
+#song-title {
+    font-size: 18px;
+    font-family: 'Courier New', Courier, monospace;
+    overflow: hidden; /* Empêche le titre de déborder de la boîte */
+    white-space: nowrap; /* Empêche le titre de se plier sur plusieurs lignes */
+    width: 100%; /* Prend toute la largeur de la boîte */
+    text-align: left; /* Aligne le texte à gauche */
+    color: #4a4a4a;
+}
+
+/* Animation du défilement du titre de droite à gauche */
+@keyframes marquee {
+    0% {
+        transform: translateX(100%); /* Commence à droite de la boîte */
+    }
+    100% {
+        transform: translateX(-100%); /* Fin de l'animation, titre complètement à gauche */
+    }
+}
+
+#song-title span {
+    display: inline-block;
+    animation: marquee 10s linear infinite; /* Animation avec une durée de 10 secondes, répétée à l'infini */
+}
+/*barre d'onde*/
+body {
+    margin: 0;
+    padding: 0;
+  }
+  
+  .loading {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    height: 50px;
+    display: flex;
+    align-items: center;
+  }
+  
+  .obj {
+    width: 6px;
+    height: 0px;
+    background: #000000;
+    margin: 0 3px;
+    border-radius: 10px;
+    animation: loading 1.2s infinite;
+  }
+  
+  .obj:nth-child(2){
+    animation-delay: 0.15s;
+  }
+  .obj:nth-child(3){
+    animation-delay: 0.3s;
+  }
+  .obj:nth-child(4){
+    animation-delay: 0.45s;
+  }
+  .obj:nth-child(5){
+    animation-delay: 0.6s;
+  }
+  .obj:nth-child(6){
+    animation-delay: 0.75s;
+  }
+  .obj:nth-child(7){
+    animation-delay: 0.9s;
+  }
+  .obj:nth-child(8){
+    animation-delay: 1.05s;
+  }
+  
+  @keyframes loading {
+    0% {
+      height: 0;
+    }
+    50% {
+      height: 50px;
+    }
+    100% {
+      height: 0;
+    }
+  }
+
+/* Bouton "Passer à la chanson" */
+#next-button {
+    background-color: #ff9900;
+    padding: 10px 20px;
+    font-size: 18px;
+    border: none;
+    border-radius: 10px;
+    margin-top: 10px;
+    cursor: pointer;
+}
+.playstore-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid #000;
+    border-radius: 9999px;
+    background-color: rgba(0, 0, 0, 1);
+    padding: 0.625rem 1.5rem;
+    text-align: center;
+    color: rgba(255, 255, 255, 1);
+    outline: 0;
+    transition: all  .2s ease;
+    text-decoration: none;
+  }
+  
+  .playstore-button:hover {
+    background-color: transparent;
+    color: rgba(0, 0, 0, 1);
+  }
+  
+  .icon {
+    height: 1.5rem;
+    width: 1.5rem;
+  }
+  
+  .texts {
+    margin-left: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    line-height: 1;
+  }
+  
+  .text-1 {
+    margin-bottom: 0.25rem;
+    font-size: 0.75rem;
+    line-height: 1rem;
+  }
+  
+  .text-2 {
+    font-weight: 600;
+  }
+  /*defilement smooth*/
+  html {
+    scroll-behavior: smooth;
+  }
+  
